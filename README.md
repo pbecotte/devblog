@@ -19,3 +19,8 @@ Launching this takes a couple steps-
 6. Go to your UI and start the services (Not sure how to do this with the
 rancher-compose command yet
 
+# Initialize DB
+
+`alembic upgrade head` gets run on container initialization.  To create a db
+user, use Rancher to get a console in the container and run 
+`python blog/init.py <email> <password>`
