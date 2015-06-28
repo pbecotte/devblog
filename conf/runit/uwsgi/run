@@ -1,0 +1,11 @@
+#!/usr/bin/env bash
+
+UWSGI=/usr/bin/uwsgi
+
+PID=/var/run/uwsgi-app.pid
+
+if [ -f $PID ]; then kill -9 `cat $PID`; rm $PID; fi
+
+exec 2>&1
+
+exec chpst -u uwsgi:www-data $UWSGI --die-on-term --ini /etc/service/uwsgi/blog.ini

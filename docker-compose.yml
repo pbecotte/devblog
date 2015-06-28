@@ -1,0 +1,29 @@
+data:
+  labels:
+    io.rancher.os.createonly: 'true'
+    io.rancher.os.remove: 'false'
+  tty: true
+  image: busybox
+  volumes:
+  - /data/jenkins:/var/jenkins_home
+  - /data/blog:/storage
+  stdin_open: true
+blog:
+  build: .
+  ports:
+    - "80:80"
+  volumes:
+    - /data/blog:/storage
+jenkins:
+  ports:
+  - 8082:8080/tcp
+  restart: 'no'
+  tty: true
+  image: jenkins
+  privileged: true
+  volumes:
+  - /data/jenkins:/var/jenkins_home
+  - /var/run/docker.sock:/var/run/docker.sock
+  - /usr/bin/docker:/usr/bin/docker
+  stdin_open: true
+  user: root

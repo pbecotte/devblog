@@ -1,0 +1,31 @@
+upstream uwsgicluster {
+	server unix:///tmp/blog.sock;
+}
+
+server {
+
+	listen       80  default_server;
+    server_name  _;
+	access_log      /var/log/nginx/blog_access.log;
+	error_log       /var/log/nginx/blog_error.log;
+
+	location /static/  {
+		alias /data/blog/static/;
+	}
+
+	# Proxying connections to application servers
+	location / {
+
+		# to uwsgi
+		include			uwsgi_params;
+		uwsgi_read_timeout 60;
+		uwsgi_pass		uwsgicluster;
+
+		proxy_redirect		off;
+		proxy_set_header	Host $host;
+		proxy_set_header	X-Real-IP $remote_addr;
+		proxy_set_header	X-Forwarded-For $proxy_add_x_forwarded_for;
+		proxy_set_header	X-Forwarded-Host $server_name;
+	}
+
+}
