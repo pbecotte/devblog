@@ -12,7 +12,9 @@ COPY conf/runit /etc/service/
 COPY conf/nginx /etc/nginx/
 COPY conf/init /etc/my_init.d/
 
-RUN groupadd uwsgi && useradd -g uwsgi -G www-data uwsgi
+RUN groupadd uwsgi && useradd -g uwsgi -G www-data uwsgi \
+	&& mkdir /storage \
+	&& chown uwsgi:www-data /storage
 
 WORKDIR /data
 

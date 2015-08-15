@@ -1,19 +1,9 @@
-data:
-  labels:
-    io.rancher.os.createonly: 'true'
-    io.rancher.os.remove: 'false'
-  tty: true
-  image: busybox
-  volumes:
-  - /data/jenkins:/var/jenkins_home
-  - /data/blog:/storage
-  stdin_open: true
 blog:
   build: .
   ports:
     - "80:80"
   volumes:
-    - /data/blog:/storage
+    - /home/rancher/storage:/storage
 jenkins:
   ports:
   - 8082:8080/tcp
