@@ -9,13 +9,20 @@
     {% if search %}
       {% set entry = entry.entry %}
     {% endif %}
-    <h3>
+    <div class="post-preview">
       <a href="{% if entry.published %}{{ url_for('entry.detail', slug=entry.slug) }}{% else %}{{ url_for('entry.edit', slug=entry.slug) }}{% endif %}">
-        {{ entry.title }}
+        <h2 class="post-title">
+            {{ entry.title }}
+        </h2>
+        <h3 class="post-subtitle">
+          {{ entry.tagline }}
+        </h3>
       </a>
-    </h3>
-    <p>{{ entry.tagline }}</p>
-    <p>Created {{ entry.timestamp.strftime('%m/%d/%Y at %G:%I%p') }}</p>
+    <p class="post-meta">
+        Created {{ entry.timestamp.strftime('%m/%d/%Y at %G:%I%p') }}
+    </p>
+    </div>
+    <hr>
   {% endfor %}
   {% include "includes/pagination.html" %}
 {% endblock %}

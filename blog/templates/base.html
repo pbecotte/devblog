@@ -34,7 +34,7 @@
 <body>
 
     <!-- Navigation -->
-    <nav class="navbar navbar-default navbar-custom navbar-fixed-top">
+    <nav class="navbar navbar-default navbar-custom navbar-fixed-top" style="background-color:black; opacity:0.7;">
         <div class="container-fluid">
             <!-- Brand and toggle get grouped for better mobile display -->
             <div class="navbar-header page-scroll">
@@ -76,9 +76,11 @@
             <div class="row">
                 <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
                     <div class="site-heading">
-                        <h1>{%  block content_title %}Paul Becotte {% endblock %}</h1>
+                    <div style="background-color:black; opacity:0.7;">
+                        <h1 >{%  block content_title %}Paul Becotte {% endblock %}</h1>
                         <hr class="small">
                         <span class="subheading">{% block tagline %}A developer's blog{% endblock %}</span>
+                    </div>
                     </div>
                 </div>
             </div>
@@ -94,10 +96,12 @@
           <p>{{ message }}</p>
         </div>
       {% endfor %}
-
-      {% block content %}{% endblock %}
+      <div class="row">
+          <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+              {% block content %}{% endblock %}
+          </div>
+      </div>
     </div>
-
     <hr>
 
     <!-- Footer -->
