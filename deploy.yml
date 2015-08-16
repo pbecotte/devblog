@@ -4,9 +4,6 @@ blog:
     service: blog
   links:
     - postgres:postgres
-  volumes:
-    - /tmp
-    - .:/data
 nginx:
   extends:
     file: base.yml

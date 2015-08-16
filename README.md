@@ -22,19 +22,19 @@ eval "$(docker-machine env digital-ocean)"
 Launch your environment
 
 ```sh
-docker-compose -f base.yml up -d
-docker-compose -f base.yml run --rm blog alembic upgrade head
+docker-compose -f deploy.yml up -d
+docker-compose -f deploy.yml run --rm blog alembic upgrade head
 ```
 
 Add a user to the db with
 
 ```sh
-docker-compose -f base.yml run --rm blog python blog/init.py myemail@example.com mypassword
+docker-compose -f deploy.yml run --rm blog python blog/init.py myemail@example.com mypassword
 ```
 
 After doing code changes,
 
 ```sh
-docker-compose -f base.yml build blog
-docker-compose -f base.yml up -d blog
+docker-compose -f deploy.yml build blog
+docker-compose -f deploy.yml up -d blog
 ```
