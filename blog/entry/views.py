@@ -69,14 +69,14 @@ def create():
 @login_required
 def edit(slug):
     entry = get_object_or_404(Entry.query, Entry.slug == slug)
-    form = CreateForm()
     if request.method == 'POST':
-        if request.form.get('title') and request.form.get('content'):
-            entry.title = form['title']
-            entry.tagline = form['tagline']
-            entry.image = handle_image(form.image) if form.image else entry.image
-            entry.content = form['content']
-            entry.published = form.get('published') == 'y'
+        form = CreateForm()
+        if form.title and form.content:
+            entry.title = form.title.data
+            entry.tagline = form.tagline.data
+            entry.image = handle_image(form.image) if form.image.data else entry.image
+            entry.content = form.content.data
+            entry.published = form.published.data
             entry.save()
 
             flash('Entry saved successfully.', 'success')
@@ -87,4 +87,5 @@ def edit(slug):
         else:
             flash('Title and Content are required.', 'danger')
 
-    return render_template('edit.html', entry=entry)
+    form = CreateForm(obj=entry)
+    return render_template('edit.html', entry=entry, form=form)
