@@ -1,0 +1,19 @@
+blog:
+  build: .
+  volumes:
+    - /tmp
+    - /data/blog/static
+  user: uwsgi
+  links:
+    - postgres:postgres
+  command: uwsgi --die-on-term --ini /data/conf/uwsgi/blog.ini
+nginx:
+  build: conf/nginx
+  ports:
+    - "80:80"
+  volumes_from:
+    - blog
+postgres:
+  image: postgres
+  environment:
+    - POSTGRES_PASSWORD=random_password

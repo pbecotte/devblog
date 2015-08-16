@@ -23,5 +23,7 @@ itsdangerous==0.24
 micawber==0.3.2
 paramiko==1.15.2
 passlib==1.6.2
+psycopg2==2.6.1
 pycrypto==2.6.1
+uwsgi==2.0.11.1
 wsgiref==0.1.2

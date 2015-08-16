@@ -1,26 +1,40 @@
 # Developer Blog
 
 This is my little personal project.  I wanted a CMS project that I could mess
-with and deploy easily- oddly, the deploy part is the hard part.  I wound up
-setting this up using [Rancherio](http://rancher.com/) in an AWS instance.
-Launching this takes a couple steps-
+with and deploy easily.  Using docker-machine and docker-compose, this got to
+be pretty easy.  Create a machine remotely with docker installed with machine-
 
-1. Launch an EC2 instance using the RancherOS AMI.  
-2. Create a virtualenv, then `pip install -r requirements.txt`
-3. Run `fab blog provision` to install Rancher Server on the machine.
-4. Navigate to your server at <public IP>:8080
-	* set up access control
-	* add a host- you can use Docker-Machine or create a 'custom' host
-	on the same ec2 instance as your server.
-	* download the rancher-compose executable, get your API info
-	* set your AWS credentials and rancher credentials (I like to add them
-	to the 'activate' script in my venv
-5. Run `rancher-compose create` to create the services
-6. Go to your UI and start the services (Not sure how to do this with the
-rancher-compose command yet
+```sh
+export DIGITAL_OCEAN_TOKEN=<a digital ocean token>
 
-# Initialize DB
+docker-machine create \
+  --driver digitalocean \
+  --digitalocean-access-token=$DIGITAL_OCEAN_TOKEN \
+  digital-ocean
+```
+(if you want to use another hosting provider, feel free!)
+Point your docker client at that machine
 
-`alembic upgrade head` gets run on container initialization.  To create a db
-user, use Rancher to get a console in the container and run 
-`python blog/init.py <email> <password>`
+```sh
+eval "$(docker-machine env digital-ocean)"
+```
+
+Launch your environment
+
+```sh
+docker-compose -f base.yml up -d
+docker-compose -f base.yml run --rm blog alembic upgrade head
+```
+
+Add a user to the db with
+
+```sh
+docker-compose -f base.yml run --rm blog python blog/init.py myemail@example.com mypassword
+```
+
+After doing code changes,
+
+```sh
+docker-compose -f base.yml build blog
+docker-compose -f base.yml up -d blog
+```
