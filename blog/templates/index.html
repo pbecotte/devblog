@@ -2,7 +2,7 @@
 
 {% block title %}Blog entries{% endblock %}
 
-{% block content_title %}{% if search %}Search "{{ search }}"{% else %}Blog entries{% endif %}{% endblock %}
+{% block content_title %}{% if search %}Search "{{ search }}"{% else %}Paul Becotte{% endif %}{% endblock %}
 
 {% block content %}
   {% for entry in object_list %}
@@ -19,7 +19,7 @@
         </h3>
       </a>
     <p class="post-meta">
-        Created {{ entry.timestamp.strftime('%m/%d/%Y at %G:%I%p') }}
+        Created {{ entry.timestamp.strftime('%m/%d/%Y at %l:%M%p') }}
     </p>
     </div>
     <hr>

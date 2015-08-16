@@ -2,7 +2,6 @@ blog:
   build: .
   volumes:
     - /tmp
-    - /data/blog/static
   user: uwsgi
   command: uwsgi --die-on-term --ini /data/conf/uwsgi/blog.ini
 nginx:

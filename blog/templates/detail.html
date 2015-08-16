@@ -15,6 +15,6 @@
 {% block tagline %}{{ entry.tagline }}{% endblock %}
 
 {% block content %}
-  <p>Created {{ entry.timestamp.strftime('%m/%d/%Y at %G:%I%p') }}</p>
+  <p>Created {{ entry.timestamp.strftime('%m/%d/%Y at %l:%M%p') }}</p>
   {{ entry.html_content }}
 {% endblock %}
