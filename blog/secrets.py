@@ -1,0 +1,6 @@
+SECRET_KEY = 'asdfgmboaisdlrnncm;aaaaasd;thdcacnasdfyy7'
+S3_LOCATION = 'http://paulbecotte-images.s3-website-us-east-1.amazonaws.com/'
+S3_KEY = 'AKIAIQJZVGGCWQZNIQSQ'
+S3_SECRET = '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'
+S3_UPLOAD_DIRECTORY = 'img'
+S3_BUCKET = 'paulbecotte-images'

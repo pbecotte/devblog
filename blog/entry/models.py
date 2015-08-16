@@ -19,14 +19,16 @@ class Entry(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     title = db.Column(db.String(255), unique=True)
     slug = db.Column(db.String(255), unique=True)
+    tagline = db.Column(db.String(5000))
     content = db.Column(db.String(50000))
     published = db.Column(db.Boolean())
     timestamp = db.Column(db.DateTime(), default=datetime.now)
+    image = db.Column(db.String(255))
 
     @classmethod
-    def create(cls, title, content, published=False):
+    def create(cls, title, tagline, content, published=False, image=None):
         slug = re.sub('[^\w]+', '-', title.lower())
-        e = Entry(title=title, content=content, published=published, slug=slug)
+        e = Entry(title=title, tagline=tagline, content=content, published=published, slug=slug, image=image)
         db.session.add(e)
         db.session.commit()
         return e
@@ -41,7 +43,7 @@ class Entry(db.Model):
 
     @classmethod
     def drafts(cls):
-        return Entry.query.filter(Entry.published == False)
+        return Entry.query.filter(Entry.published is False)
 
     @property
     def html_content(self):

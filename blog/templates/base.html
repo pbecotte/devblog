@@ -9,7 +9,7 @@
     <meta name="description" content="">
     <meta name="author" content="">
 
-    <title>Paul Becotte</title>
+    <title{% block title %}>Paul Becotte{% endblock %}</title>
 
     <!-- Bootstrap Core CSS -->
     <link href="{{ url_for('static', filename='css/bootstrap.min.css') }}" rel="stylesheet">
@@ -70,9 +70,20 @@
 
     <!-- Page Header -->
     {% block page_header %}
-    <div class="page-header">
-      <h1>{% block content_title %}{% endblock %}</h1>
-    </div>
+    <!-- Set your background image for this header on the line below. -->
+    <header class="intro-header" style="background-image: url('{% block header_image %}{{ url_for('static', filename='img/home-bg.jpg') }}{% endblock %}')">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+                    <div class="site-heading">
+                        <h1>{%  block content_title %}Paul Becotte {% endblock %}</h1>
+                        <hr class="small">
+                        <span class="subheading">{% block tagline %}A developer's blog{% endblock %}</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </header>
     {% endblock %}
 
     <!-- Main Content -->

@@ -12,6 +12,7 @@ def create_app():
     # Create app
     app = Flask(__name__)
     app.config.from_object('blog.config')
+    app.config.from_object('blog.secrets')
     db.init_app(app)
     security.init_app(app)
     app.register_blueprint(entry)
