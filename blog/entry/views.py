@@ -1,6 +1,6 @@
 from flask import Blueprint, current_app, request, flash, render_template, redirect, url_for
 from flask.ext.security import login_required, current_user
-from .forms import CreateForm
+from .forms import CreateForm, ImageForm
 from .images import handle_image
 from .models import Entry
 from blog.utils import object_list, get_object_or_404
@@ -62,7 +62,9 @@ def create():
                 return redirect(url_for('entry.edit', slug=entry.slug))
         else:
             flash('Title and Content are required.', 'danger')
-    return render_template('create.html', form=form)
+
+    image_form = ImageForm()
+    return render_template('create.html', form=form, image_form=image_form)
 
 
 @entry.route('/<slug>/edit/', methods=['GET', 'POST'])
@@ -88,4 +90,15 @@ def edit(slug):
             flash('Title and Content are required.', 'danger')
 
     form = CreateForm(obj=entry)
-    return render_template('edit.html', entry=entry, form=form)
+    image_form = ImageForm()
+    return render_template('edit.html', entry=entry, form=form, image_form=image_form)
+
+@entry.route('/upload_image/', methods=['POST'])
+@login_required
+def upload_image():
+    form = ImageForm()
+    image_name = handle_image(form.image) if form.image else ''
+    return '{bucket}{path}/{filename}'.format(
+        bucket=current_app.config['S3_LOCATION'],
+        path=current_app.config['S3_UPLOAD_DIRECTORY'],
+        filename=image_name)

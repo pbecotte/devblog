@@ -7,3 +7,6 @@ class CreateForm(Form):
     image = FileField('image')
     content = TextAreaField('content')
     published = BooleanField('published')
+
+class ImageForm(Form):
+    image = FileField('image')

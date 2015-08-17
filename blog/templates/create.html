@@ -43,4 +43,47 @@
       </div>
     </div>
 </form>
+
+<form action="{{ url_for('entry.upload_image') }}" id="uploadForm" enctype="multipart/form-data">
+    <div class="form-group">
+        {{ form.image.label(class="col-sm-2 control-label") }}
+        <div class="col-sm-10">
+            {{ form.image }}
+        </div>
+    </div>
+    <div class="form-group">
+      <div class="col-sm-offset-2 col-sm-10">
+        <button class="btn btn-primary" type="submit">Upload</button>
+        <div id="result"></div>
+      </div>
+    </div>
+</form>
+<!-- the filename from the upload will be rendered inside this div -->
+<div id="result"></div>
+{% endblock %}
+
+{% block extra_scripts %}
+<script>
+// Attach a submit handler to the form
+$( "#uploadForm" ).submit(function( event ) {
+
+    var formData = new FormData($( this )[0]);
+    var url = $( this ).attr( "action" )
+
+    $.ajax({
+        url: url,
+        type: 'POST',
+        data: formData,
+        async: false,
+        success: function (data) {
+            $( "#result" ).empty().append( data );
+        },
+        cache: false,
+        contentType: false,
+        processData: false
+    });
+
+    return false;
+});
+</script>
 {% endblock %}
