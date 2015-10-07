@@ -32,7 +32,6 @@ def detail(slug):
     else:
         query = Entry.public()
     entry = get_object_or_404(query, Entry.slug == slug)
-    print entry.html_content
     image_url = '{bucket}{path}/{filename}'.format(
         bucket=current_app.config['S3_LOCATION'],
         path=current_app.config['S3_UPLOAD_DIRECTORY'],
