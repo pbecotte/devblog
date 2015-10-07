@@ -5,6 +5,7 @@ from markdown.extensions.codehilite import CodeHiliteExtension
 from markdown.extensions.extra import ExtraExtension
 from micawber import parse_html, bootstrap_basic
 from micawber.cache import Cache as OEmbedCache
+from sqlalchemy.sql.expression import false
 import re
 
 from blog.orm import db
@@ -43,7 +44,7 @@ class Entry(db.Model):
 
     @classmethod
     def drafts(cls):
-        return Entry.query.filter(Entry.published is False)
+        return Entry.query.filter(Entry.published == false())
 
     @property
     def html_content(self):
