@@ -1,19 +1,31 @@
-blog:
-  extends:
-    file: base.yml
-    service: blog
-  links:
-    - postgres:postgres
-  volumes:
-    - /tmp
-    - .:/data
-nginx:
-  extends:
-    file: base.yml
-    service: nginx
-  volumes_from:
-    - blog
-postgres:
-  extends:
-    file: base.yml
-    service: postgres
+version: '2'
+services:
+  blog:
+    build:
+      context: .
+    volumes:
+      - /tmp
+    user: uwsgi
+    command: uwsgi --die-on-term --ini /data/conf/uwsgi/blog.ini
+    networks:
+      - default
+    depends_on:
+      - postgres
+  nginx:
+    build:
+      context: .
+      dockerfile: conf/nginx/Dockerfile
+    ports:
+      - "80:80"
+    networks:
+      - default
+    depends_on:
+      - blog
+    volumes_from:
+      - blog
+  postgres:
+    image: postgres
+    environment:
+      - POSTGRES_PASSWORD=random_password
+    networks:
+      - default

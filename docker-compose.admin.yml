@@ -1,0 +1,32 @@
+version: '2'
+services:
+  backup:
+    image: postgres
+    networks:
+      - default
+    depends_on:
+      - postgres
+    volumes:
+      - ./:/tmp
+    environment:
+      - PGPASSWORD=random_password
+    command: pg_dump -U postgres -h postgres postgres
+  restore:
+    image: postgres
+    networks:
+      - default
+    depends_on:
+      - postgres
+    volumes:
+      - /tmp:/tmp
+    environment:
+      - PGPASSWORD=random_password
+    command: psql -U postgres -h postgres -f /tmp/backup.sql postgres
+  migrate:
+    build:
+      context: .
+    networks:
+      - default
+    depends_on:
+      - postgres
+    command: alembic upgrade head
