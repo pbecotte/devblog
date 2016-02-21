@@ -30,28 +30,39 @@ docker-machine create \
   digital-ocean
 ```
 (if you want to use another hosting provider, feel free!)
-Point your docker client at that machine
+Update your makefile with your machine name
 
 ```sh
-eval "$(docker-machine env digital-ocean)"
+MACHINE=digitalocean
 ```
 
 Launch your environment
 
 ```sh
-docker-compose -f deploy.yml up -d
-docker-compose -f deploy.yml run --rm blog alembic upgrade head
+make deploy
+make migrate
 ```
 
-Add a user to the db with
+Add a user to the db with (this sets your local docker to point to
+the remote machine.  You CAN choose to just leave it pointed that way,
+just don't accidentily get confused between dev!
 
 ```sh
-docker-compose -f deploy.yml run --rm blog python blog/init.py myemail@example.com mypassword
+eval `docker-machine env $(MACHINE)`
+docker-compose run --rm blog python blog/init.py myemail@example.com mypassword
+eval `docker-machine env --unset`
 ```
 
-After doing code changes,
+After doing code changes, easy as
 
 ```sh
-docker-compose -f deploy.yml build blog
-docker-compose -f deploy.yml up -d blog
+make deploy
+```
+
+You can run the blog on your local machine with
+
+```sh
+make dev
+make migrate-dev
+docker-compose run --rm blog python blog/init.py myemail@example.com mypassword
 ```
