@@ -2,23 +2,19 @@ version: '2'
 services:
   blog:
     build:
-      context: .
+      context: ./backend
     volumes:
       - /tmp
     user: uwsgi
     command: uwsgi --die-on-term --ini /data/conf/uwsgi/blog.ini
-    networks:
-      - default
     depends_on:
       - postgres
   nginx:
     build:
       context: .
-      dockerfile: conf/nginx/Dockerfile
+      dockerfile: misc/nginx/Dockerfile
     ports:
       - "80:80"
-    networks:
-      - default
     depends_on:
       - blog
     volumes_from:
@@ -27,5 +23,3 @@ services:
     image: postgres
     environment:
       - POSTGRES_PASSWORD=random_password
-    networks:
-      - default

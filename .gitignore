@@ -106,7 +106,7 @@ docs/_build/
 # PyBuilder
 target/
 
-blog/secrets.py
+backend/blog/secrets.py
 reload
 backup.sql
 frontend/node_modules/

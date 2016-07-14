@@ -3,7 +3,7 @@ services:
   blog:
     volumes:
       - /tmp
-      - .:/data
+      - ./backend:/data
   frontend:
     build: frontend
     volumes:

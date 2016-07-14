@@ -1,15 +1,17 @@
 from __future__ import with_statement
-from alembic import context
-from sqlalchemy import engine_from_config, pool
+from datetime import datetime, timedelta
 from logging.config import fileConfig
 import os
 import sys
+import time
+
+from alembic import context
+from sqlalchemy import engine_from_config, pool
 
 sys.path.append(os.getcwd())
 
 from blog.application import create_app
 from blog.orm import db
-
 
 # this is the Alembic Config object, which provides
 # access to the values within the .ini file in use.
@@ -61,7 +63,17 @@ def run_migrations_online():
         prefix='sqlalchemy.',
         poolclass=pool.NullPool)
 
-    connection = engine.connect()
+    connection = None
+    start_time = datetime.now()
+    while connection is None:
+        try:
+            connection = engine.connect()
+        except Exception:
+            if datetime.now() > start_time + timedelta(seconds=60):
+                print("Timed out connecting to database")
+                raise
+            time.sleep(1)
+
     context.configure(
         connection=connection,
         target_metadata=target_metadata)
@@ -71,6 +83,7 @@ def run_migrations_online():
             context.run_migrations()
     finally:
         connection.close()
+
 
 if context.is_offline_mode():
     run_migrations_offline()
