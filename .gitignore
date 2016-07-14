@@ -108,3 +108,5 @@ target/
 
 blog/secrets.py
 reload
+backup.sql
+frontend/node_modules/
