@@ -1,35 +1,41 @@
-import {Component, OnInit} from '@angular/core';
-import {Router} from '@angular/router';
+import {Component, OnDestroy, OnInit} from '@angular/core';
+import {ActivatedRoute, Router} from '@angular/router';
 
 import {Entry} from "../models/entry";
+import {EntryService} from "../models/entry.service";
 
 
 @Component({
     selector: 'blogIndex',
     templateUrl: '/angular/app/blogIndex/blogIndex.component.html',
 })
-export class BlogIndexComponent implements OnInit {
+export class BlogIndexComponent implements OnDestroy, OnInit {
 
     entries:Entry[];
+    sub:any;
 
-    constructor(private router:Router){}
+    constructor(private router:Router,
+                private activatedRoute:ActivatedRoute,
+                private entryService:EntryService) {
+    }
 
     ngOnInit() {
-        this.entries = [
-            {
-                id: 1,
-                title: 'first post',
-                slug: 'first',
-                tagline: 'always one',
-                html_content: 'blog post',
-                published: true,
-                timestamp: '2016-1-1 12:00:00',
-                image: 'fakeurl.example',
-            }
-        ]
+        this.sub = this.activatedRoute.data.subscribe(data => this.fetchEntries(data.drafts))
     }
-    
-    gotoDetail(entry: Entry) {
+
+    ngOnDestroy() {
+        this.sub.unsubscribe();
+    }
+
+    fetchEntries(drafts) {
+        if (drafts) {
+            this.entryService.getEntryDrafts().then(entries => this.entries = entries);
+        } else {
+            this.entryService.getEntryIndex().then(entries => this.entries = entries);
+        }
+    }
+
+    gotoDetail(entry:Entry) {
         let link = ['/angular/entry', entry.slug];
         this.router.navigate(link);
     }

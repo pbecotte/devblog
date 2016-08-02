@@ -21,6 +21,7 @@ boto==2.38.0
 ecdsa==0.13
 gitric==0.3
 itsdangerous==0.24
+marshmallow==2.9.0
 micawber==0.3.2
 paramiko==1.15.2
 passlib==1.6.2

@@ -1,4 +1,4 @@
-from flask import request, abort, render_template
+from flask import request, abort, jsonify, render_template
 from flask.ext.sqlalchemy import BaseQuery
 import math
 
@@ -44,6 +44,20 @@ def object_list(template_name, query, context_variable='object_list',
     kwargs[context_variable] = paginated_query.get_object_list()
     return render_template(
         template_name,
+        pagination=paginated_query,
+        page=paginated_query.get_page(),
+        **kwargs)
+
+
+def json_object_list(query, context_variable='object_list',
+                paginate_by=20, page_var='page', check_bounds=True, **kwargs):
+    paginated_query = PaginatedQuery(
+        query,
+        paginate_by,
+        page_var,
+        check_bounds)
+    kwargs[context_variable] = paginated_query.get_object_list()
+    return jsonify(
         pagination=paginated_query,
         page=paginated_query.get_page(),
         **kwargs)

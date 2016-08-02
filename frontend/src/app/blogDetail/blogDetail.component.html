@@ -1,2 +1,4 @@
-<p>Created {{ entry.timestamp }}</p>
-{{ entry.html_content }}
+<div *ngIf="entry">
+    <p>Created {{ entry.timestamp }}</p>
+    <div class="stdout" [innerHTML]="entry.html_content | safe"></div>
+</div>

@@ -1,0 +1,45 @@
+<form *ngIf="entry" class="form-horizontal">
+    <div class="form-group">
+        <label class="col-sm-2 control-label" for="title">Title</label>
+        <input class="col-sm-10 form-control" type="text" name="title" required [(ngModel)]="entry.title">
+    </div>
+    <div class="form-group">
+        <label class="col-sm-2 control-label" for="tagline">Tagline</label>
+        <input class="col-sm-10" type="text" class="form-control" name="tagline" required [(ngModel)]="entry.tagline">
+    </div>
+    <div class="form-group">
+        <label class="col-sm-2 control-label" for="image">Image</label>
+        <input class="col-sm-10" type="file" class="form-control" name="image" required>
+    </div>
+    <div class="form-group">
+        <label class="col-sm-2 control-label" for="content">content</label>
+        <textarea class="form-control col-sm-10" id="content" name="content" style="height: 300px;" [(ngModel)]="entry.content">
+        </textarea>
+    </div>
+    <div class="form-group">
+        <div class="col-sm-offset-2 col-sm-10">
+            <label for="published">published</label>
+            <input checked id="published" name="published" type="checkbox" value="y" [(ngModel)]="entry.published">
+        </div>
+    </div>
+    <div class="form-group">
+      <div class="col-sm-offset-2 col-sm-10">
+        <button class="btn btn-primary" type="submit" (click)="updateEntry()">Update</button>
+        <a class="btn btn-default" [routerLink]="['/angular']">Cancel</a>
+      </div>
+    </div>
+</form>
+<form action="/upload_image/" id="uploadForm" enctype="multipart/form-data">
+    <div class="form-group">
+        <label class="col-sm-2 control-label" for="image">image</label>
+        <div class="col-sm-10">
+            <input id="image" name="image" type="file">
+        </div>
+    </div>
+    <div class="form-group">
+      <div class="col-sm-offset-2 col-sm-10">
+        <button class="btn btn-primary" type="submit">Upload</button>
+        <div id="result"></div>
+      </div>
+    </div>
+</form>

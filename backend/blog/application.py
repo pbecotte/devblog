@@ -1,11 +1,10 @@
 from flask import Flask, render_template
 import urllib
-from alembic import command as alembic_command
-from alembic.config import Config as AlembicConfig
 
 from blog.orm import db
 from blog.security import security
 from blog.entry import entry
+from blog.entry.api import ENTRY_API
 
 
 def create_app():
@@ -16,6 +15,7 @@ def create_app():
     db.init_app(app)
     security.init_app(app)
     app.register_blueprint(entry)
+    app.register_blueprint(ENTRY_API)
 
     @app.errorhandler(404)
     def not_found(exc):

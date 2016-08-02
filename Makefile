@@ -9,12 +9,12 @@ build:
 	docker build -t building frontend
 	docker run --rm -v `pwd`/frontend/node_modules:/app/node_modules building npm install --unsafe-perm
 migrate:
-	docker-compose run --rm blog alembic upgrade head
+	docker-compose run --rm blog python blog/fixtures.py
 up:
 	docker-compose up -d
 	$(MAKE) migrate
 restart:
-	docker-compose restart
+	docker-compose restart blog frontend nginx
 down:
 	docker-compose down -v --remove-orphans
 
