@@ -6,8 +6,10 @@ from markdown.extensions.extra import ExtraExtension
 from micawber import parse_html, bootstrap_basic
 from micawber.cache import Cache as OEmbedCache
 from sqlalchemy.sql.expression import false
+from sqlalchemy.ext.hybrid import hybrid_property
 import re
 
+from blog.entry.images import handle_image
 from blog.orm import db
 
 # Configure micawber with the default OEmbed providers (YouTube, Flickr, etc).
@@ -24,7 +26,15 @@ class Entry(db.Model):
     content = db.Column(db.String(50000))
     published = db.Column(db.Boolean())
     timestamp = db.Column(db.DateTime(), default=datetime.now)
-    image = db.Column(db.String(255))
+    _image = db.Column('image', db.String(255))
+
+    @hybrid_property
+    def image(self):
+        return self._image
+
+    @image.setter
+    def image(self, value):
+        self._image = handle_image(value) if hasattr(value, 'data') else self._image
 
     @classmethod
     def create(cls, title, tagline, content, published=False, image=None):

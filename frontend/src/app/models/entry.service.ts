@@ -31,6 +31,32 @@ export class EntryService {
             .toPromise().then(response => this.handleData(response.json()))
             .catch(this.handleError);
     }
+    
+    updateEntry(entry: Entry, file:File) {
+        new Promise((resolve, reject) => {
+            let formData: FormData = new FormData(),
+                xhr: XMLHttpRequest = new XMLHttpRequest(),
+                url: string = this.indexUrl + entry.slug + '/edit/';
+
+            if (file) {formData.append("image", file, file.name);}
+            formData.append("entry", JSON.stringify(entry));
+
+            xhr.onreadystatechange = () => {
+                if (xhr.readyState === 4) {
+                    if (xhr.status == 200) {
+                        resolve(JSON.parse(xhr.response));
+                    } else {
+                        reject(xhr.response);
+                    }
+                }
+            };
+
+            xhr.open('PUT', url, true);
+            xhr.setRequestHeader("enctype", "multipart/form-data");
+            xhr.send(formData);
+        }).then(response => this.messageFlashed$.emit(response.json().messages))
+            .catch(this.handleError);
+    }
 
     private handleData(response_json) {
         if (response_json.messages) {

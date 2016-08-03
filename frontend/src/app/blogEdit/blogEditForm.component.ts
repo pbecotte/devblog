@@ -13,9 +13,11 @@ import {EntryService} from "../models/entry.service";
 })
 export class BlogEditFormComponent implements OnInit, OnDestroy{
     entry:Entry;
+    file:File;
     sub:Subscription;
     entrySlug:string;
     image:string;
+    heroForm:NgForm;
     
     constructor(
         private route:ActivatedRoute,
@@ -41,6 +43,11 @@ export class BlogEditFormComponent implements OnInit, OnDestroy{
     }
     
     updateEntry () {
-        
+        this.entryService.updateEntry(this.entry, this.file)
+    }
+
+    onFileChange (ev) {
+        this.file = ev.target.files[0];
+        this.entry.image = this.file.name;
     }
 }

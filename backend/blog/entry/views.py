@@ -64,7 +64,7 @@ def create():
     form = CreateForm()
     if request.method == 'POST':
         if form.title and form.content:
-            image = handle_image(form.image) if form.image else None
+            image = form.image if form.image else None
 
             entry = Entry.create(
                 title=form.title.data,
@@ -110,6 +110,7 @@ def edit(slug):
     form = CreateForm(obj=entry)
     image_form = ImageForm()
     return render_template('edit.html', entry=entry, form=form, image_form=image_form)
+
 
 @entry.route('/upload_image/', methods=['POST'])
 @login_required

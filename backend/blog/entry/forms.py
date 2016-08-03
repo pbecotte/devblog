@@ -10,3 +10,7 @@ class CreateForm(Form):
 
 class ImageForm(Form):
     image = FileField('image')
+
+class UpdateForm(Form):
+    image = FileField('image')
+    entry = StringField('entry')
