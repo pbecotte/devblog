@@ -6,6 +6,7 @@ import {EntryService} from "../models/entry.service";
 import {Safe} from "../root/safe";
 import {NavService} from "../models/nav.service";
 import {NavEntry} from "../models/nav";
+import {HeaderService} from "../models/header.service";
 
 
 @Component({
@@ -24,10 +25,13 @@ export class BlogDetailComponent implements OnInit, OnDestroy {
     constructor(
         private route:ActivatedRoute,
         private entryService:EntryService,
-        private navService:NavService
+        private navService:NavService,
+        private headerService:HeaderService
     ) {}
 
     ngOnInit() {
+        console.log('fuck you!');
+        console.log(this.headerService.jimmy);
         this.sub = this.route.params.subscribe(params => {
             this.entrySlug = params['slug'];
             this.getEntry(this.entrySlug)
@@ -38,14 +42,20 @@ export class BlogDetailComponent implements OnInit, OnDestroy {
 
     ngOnDestroy() {
         if (this.sub) {this.sub.unsubscribe()}
-        this.navService.navEntry$.emit({add: false, entry: this.nav})
+        this.navService.navEntry$.emit({add: false, entry: this.nav});
+        this.headerService.clearHeader();
     }
     
     getEntry(slug:string) {
-        this.entryService.getEntryDetail(slug).then(data => function (_comp, _data) {
-            _comp.entry = _data.entry;
-            _comp.image = _data.image;
-            _comp.nav.dest = ['/angular/entry', _data.entry.slug, '/edit']
-        }(this, data))
+        this.entryService.getEntryDetail(slug).then(data => {
+            this.entry = data.entry;
+            this.image = data.image;
+            this.nav.dest = ['/angular/entry', data.entry.slug, '/edit'];
+            console.log('the blog component');
+            this.headerService.updateHeader({
+                title: this.entry.title,
+                subhead: this.entry.tagline,
+                image: this.image});
+        })
     }
 }

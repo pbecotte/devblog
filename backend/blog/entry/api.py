@@ -72,3 +72,22 @@ def api_update_entry(slug):
         resp = jsonify({"error": err.messages})
         resp.status_code = 401
         return resp
+
+
+@ENTRY_API.route('/api/entries/create/', methods=['POST'])
+@login_required
+def api_create_entry():
+    entry = Entry()
+    form = UpdateForm()
+    try:
+        input_dict = EntryDetailSchema(strict=True).loads(form.entry.data).data
+        for key, value in input_dict.items():
+            setattr(entry, key, value)
+        entry.image = form.image if form.image else ''
+        db.session.commit()
+        output = EntryDetailSchema().dump(entry).data
+        return jsonify(data={'entry': output}, messages=['Saved!'])
+    except ValidationError as err:
+        resp = jsonify({"error": err.messages})
+        resp.status_code = 401
+        return resp
