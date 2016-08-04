@@ -36,7 +36,15 @@ export class EntryService {
         new Promise((resolve, reject) => {
             let formData: FormData = new FormData(),
                 xhr: XMLHttpRequest = new XMLHttpRequest(),
-                url: string = this.indexUrl + entry.slug + '/edit/';
+                url: string,
+                method: string;
+            if (entry.slug) {
+                url = this.indexUrl + entry.slug + '/edit/';
+                method = 'PUT';
+            } else {
+                url = '/api/create/';
+                method = 'POST';
+            }
 
             if (file) {formData.append("image", file, file.name);}
             formData.append("entry", JSON.stringify(entry));
@@ -51,7 +59,7 @@ export class EntryService {
                 }
             };
 
-            xhr.open('PUT', url, true);
+            xhr.open(method, url, true);
             xhr.setRequestHeader("enctype", "multipart/form-data");
             xhr.send(formData);
         }).then(response => this.messageFlashed$.emit(response.json().messages))

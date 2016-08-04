@@ -13,7 +13,7 @@ ENTRY_API = Blueprint('entry_api', __name__)
 class EntryStubSchema(Schema):
     id = fields.Integer()
     title = fields.Str()
-    slug = fields.Str()
+    slug = fields.Str(dump_only=True)
     tagline = fields.Str()
     published = fields.Boolean()
     timestamp = fields.DateTime()
@@ -64,7 +64,7 @@ def api_update_entry(slug):
         input_dict = EntryDetailSchema(strict=True).loads(form.entry.data).data
         for key, value in input_dict.items():
             setattr(entry, key, value)
-        entry.image = form.image if form.image else entry.image
+        entry.image = form.image if form.image.data else entry.image
         db.session.commit()
         output = EntryDetailSchema().dump(entry).data
         return jsonify(data={'entry': output}, messages=['Saved!'])
@@ -74,17 +74,15 @@ def api_update_entry(slug):
         return resp
 
 
-@ENTRY_API.route('/api/entries/create/', methods=['POST'])
+@ENTRY_API.route('/api/create/', methods=['POST'])
 @login_required
 def api_create_entry():
-    entry = Entry()
     form = UpdateForm()
     try:
         input_dict = EntryDetailSchema(strict=True).loads(form.entry.data).data
-        for key, value in input_dict.items():
-            setattr(entry, key, value)
-        entry.image = form.image if form.image else ''
-        db.session.commit()
+        if form.image.data:
+            input_dict['image'] = form.image
+        entry = Entry.create(**input_dict)
         output = EntryDetailSchema().dump(entry).data
         return jsonify(data={'entry': output}, messages=['Saved!'])
     except ValidationError as err:

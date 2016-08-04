@@ -30,11 +30,9 @@ export class BlogDetailComponent implements OnInit, OnDestroy {
     ) {}
 
     ngOnInit() {
-        console.log('fuck you!');
-        console.log(this.headerService.jimmy);
         this.sub = this.route.params.subscribe(params => {
             this.entrySlug = params['slug'];
-            this.getEntry(this.entrySlug)
+            this.getEntry(this.entrySlug);
         });
         this.nav = {title: 'Edit Post', dest: []};
         this.navService.navEntry$.emit({add: true, entry: this.nav})
@@ -51,7 +49,6 @@ export class BlogDetailComponent implements OnInit, OnDestroy {
             this.entry = data.entry;
             this.image = data.image;
             this.nav.dest = ['/angular/entry', data.entry.slug, '/edit'];
-            console.log('the blog component');
             this.headerService.updateHeader({
                 title: this.entry.title,
                 subhead: this.entry.tagline,

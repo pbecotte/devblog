@@ -23,6 +23,10 @@ const routes:RouterConfig = [
         path: 'angular/entry/:slug/edit',
         component: BlogEditFormComponent
     },
+    {
+        path: 'angular/create',
+        component: BlogEditFormComponent
+    }
 ];
 
 export const APP_ROUTER_PROVIDERS = [

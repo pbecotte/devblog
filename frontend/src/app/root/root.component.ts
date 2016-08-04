@@ -29,17 +29,15 @@ export class RootComponent implements OnInit, OnDestroy{
         this.extraNav = [];
          entryService.messageFlashed$.subscribe(
              messages => this.messages.push.apply(this.messages, messages));
-                this.basicHeader = {
+        this.basicHeader = {
             title: "Paul Becotte",
             subhead: "A Python/Devops guy's personal blog",
             image: '/static/img/home-bg.jpg',
         };
         this.header = this.basicHeader;
-        this.headerService.jimmy = 'hi'
     }
 
     ngOnInit() {
-        console.log('launching root');
         this.navService.navEntry$.subscribe(entry => this.updateNav(entry));
         this.headerService.header$.subscribe(header => this.updateHeader(header));
         this.headerService.clearHeader$.subscribe(_ => this.clearHeader());
@@ -56,7 +54,6 @@ export class RootComponent implements OnInit, OnDestroy{
     }
 
     updateHeader(header: Header) {
-        console.log('this happened!');
         this.header = header;
     }
 
