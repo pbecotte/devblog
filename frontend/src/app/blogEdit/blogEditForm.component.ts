@@ -1,9 +1,8 @@
-import {Component} from '@angular/core';
+import {Component, OnInit, OnDestroy} from '@angular/core';
 import {ActivatedRoute, ROUTER_DIRECTIVES} from '@angular/router';
 import {NgForm}    from '@angular/forms';
 import {Subscription} from "rxjs/Subscription";
-import {Entry} from "../models/entry";
-import {EntryService} from "../models/entry.service";
+import {Entry, EntryService} from "../models/entry.service";
 
 
 @Component({

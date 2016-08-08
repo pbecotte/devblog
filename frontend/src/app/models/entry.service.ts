@@ -3,6 +3,20 @@ import {Http} from '@angular/http';
 import {Entry} from "./entry";
 import 'rxjs/add/operator/toPromise';
 
+
+export class Entry {
+    id:number;
+    title:string;
+    slug:string;
+    tagline:string;
+    content:string;
+    html_content:string;
+    published:boolean;
+    timestamp:string;
+    image:string;
+}
+
+
 @Injectable()
 export class EntryService {
 

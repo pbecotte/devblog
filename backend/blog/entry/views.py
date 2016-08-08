@@ -44,20 +44,6 @@ def detail(slug):
     return render_template('detail.html', entry=entry, image=image_url)
 
 
-@entry.route('/api/blog/<slug>/')
-def api_detail(slug):
-    if current_user.is_authenticated():
-        query = Entry.query
-    else:
-        query = Entry.public()
-    entry = get_object_or_404(query, Entry.slug == slug)
-    image_url = '{bucket}{path}/{filename}'.format(
-        bucket=current_app.config['S3_LOCATION'],
-        path=current_app.config['S3_UPLOAD_DIRECTORY'],
-        filename=entry.image) if entry.image else ''
-    return jsonify(entry=entry, image=image_url)
-
-
 @entry.route('/create/', methods=['GET', 'POST'])
 @login_required
 def create():

@@ -11,20 +11,22 @@ export class Header {
 @Injectable()
 export class HeaderService {
     constructor(){
-        this.header$ = new EventEmitter();
-        this.clearHeader$ = new EventEmitter();
+        this.basicHeader = {
+            title: "Paul Becotte",
+            subhead: "A Python/Devops guy's personal blog",
+            image: '/static/img/home-bg.jpg',
+        };
+        this.header = this.basicHeader;
     };
 
-    public header$: EventEmitter<Header>;
-    public clearHeader$ = EventEmitter;
+    public header: Header;
+    private basicHeader: Header;
 
     updateHeader(header: Header) {
-        console.log('the service');
-        this.header$.emit(header);
-        console.log('went?' + header)
+        this.header = header;
     }
 
     clearHeader() {
-        this.clearHeader$.emit('');
+        this.header = this.basicHeader;
     }
 }

@@ -1,8 +1,6 @@
 import {Component, OnDestroy, OnInit} from '@angular/core';
 import {ActivatedRoute, Router} from '@angular/router';
-
-import {Entry} from "../models/entry";
-import {EntryService} from "../models/entry.service";
+import {Entry, EntryService} from "../models/entry.service";
 
 
 @Component({

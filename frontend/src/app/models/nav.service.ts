@@ -1,21 +1,26 @@
-import {EventEmitter, Injectable} from '@angular/core';
+import {Injectable} from '@angular/core';
 import 'rxjs/add/operator/toPromise';
-import {NavEntry, NavRequest} from "./nav";
+
+
+export class NavEntry {
+    title:string;
+    dest:string[];
+}
+
 
 @Injectable()
 export class NavService {
     constructor(){
-        this.navEntry$ = new EventEmitter();
+        this.extraNav = [];
     };
     
-    public navEntry$: EventEmitter<NavRequest>;
+    public extraNav: NavEntry[];
     
-    addEntry(entry:NavEntry) {
-        let req: NavRequest = new NavRequest(true, entry);
-        this.navEntry$.emit(req);
+    addEdit(slug:string) {
+        let nav: NavEntry = {title: 'Edit Entry', dest: ['/angular/entry', slug, '/edit']};
+        this.extraNav.push(nav)
     }
-    removeEntry(entry:NavEntry) {
-        let req: NavRequest = new NavRequest(false, entry);
-        this.navEntry$.emit(req)
+    removeEdit() {
+        this.extraNav.splice(0, 1)
     }
 }
