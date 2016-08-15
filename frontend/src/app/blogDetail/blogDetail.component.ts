@@ -43,6 +43,11 @@ export class BlogDetailComponent implements OnInit, OnDestroy {
         this.entryService.getEntryDetail(slug).then(data => {
             this.entry = data.entry;
             this.image = data.image;
+            this.headerService.updateHeader({
+                title: this.entry.title,
+                subhead: this.entry.tagline,
+                image: this.image
+            });
             this.navService.addEdit(data.entry.slug);
         })
     }
