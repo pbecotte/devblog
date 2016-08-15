@@ -5,14 +5,9 @@ services:
       - /tmp
       - ./backend:/data
   frontend:
-    build: frontend
     volumes:
       - ./frontend/src:/app/src
       - ./frontend/package.json:/app/package.json
       - ./frontend/tsconfig.json:/app/tsconfig.json
       - ./frontend/typings.json:/app/typings.json
       - ./frontend/gulpfile.ts:/app/gulpfile.ts
-    command: npm start
-  nginx:
-    volumes_from:
-      - frontend
