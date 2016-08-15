@@ -1,9 +1,11 @@
-import {Component, OnInit} from '@angular/core';
-import {ROUTER_DIRECTIVES, Router} from '@angular/router';
+import {Component} from '@angular/core';
+import {ROUTER_DIRECTIVES} from '@angular/router';
 import {EntryService} from "../models/entry.service";
 import {NavService} from "../models/nav.service";
-import {HeaderService, Header} from "../models/header.service";
+import {HeaderService} from "../models/header.service";
 import {SafeStyle} from "./safe";
+import {MessageService} from "../messages/messages.service";
+import {AuthService} from "../auth/auth.service";
 
 
 @Component({
@@ -13,33 +15,11 @@ import {SafeStyle} from "./safe";
     providers: [EntryService, NavService, HeaderService],
     pipes: [SafeStyle]
 })
-export class RootComponent implements OnInit {
+export class RootComponent {
 
-    private messages: string[];
-
-    constructor(private entryService: EntryService,
+    constructor(private messageService: MessageService,
                 private navService: NavService,
                 private headerService: HeaderService,
-                private router: Router) {
-        this.messages = [];
-        entryService.messageFlashed$.subscribe(
-            messages => this.messages.push.apply(this.messages, messages));
-
-    }
-
-    ngOnInit() {}
-
-    ackMessage(message: string) {
-        var index = this.messages.indexOf(message);
-        this.messages.splice(index, 1);
-    }
-
-
-    updateHeader(header: Header) {
-        this.header = header;
-    }
-
-    clearHeader() {
-        this.header = this.basicHeader;
+                private authService: AuthService) {
     }
 }

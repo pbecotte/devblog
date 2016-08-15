@@ -3,11 +3,17 @@ import {RootComponent} from "./root.component";
 import {APP_ROUTER_PROVIDERS} from "./routes";
 import {HTTP_PROVIDERS} from '@angular/http';
 import {disableDeprecatedForms, provideForms} from '@angular/forms';
+import {LoggedInGuard} from "../auth/logged-in.guard";
+import {AuthService} from "../auth/auth.service";
+import {MessageService} from "../messages/messages.service";
 
 
 bootstrap(RootComponent, [
     HTTP_PROVIDERS,
     APP_ROUTER_PROVIDERS,
     disableDeprecatedForms(),
-    provideForms()
+    provideForms(),
+    LoggedInGuard,
+    AuthService,
+    MessageService
 ]).catch((err: any) => console.error(err));

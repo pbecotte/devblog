@@ -14,7 +14,7 @@ command.upgrade(cfg, "head")
 
 with app.app_context():
     print("Adding database fixtures")
-    user_datastore.create_user(email='admin@blog.example', password='password1234')
+    user_datastore.create_user(email='admin', password='password1234')
     db.session.add_all([])
     db.session.commit()
     print("Database populated")

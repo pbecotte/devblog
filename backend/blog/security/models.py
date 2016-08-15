@@ -1,5 +1,7 @@
-from flask.ext.security import SQLAlchemyUserDatastore, \
-    UserMixin, RoleMixin, Security
+from flask_jwt import JWT, jwt_required
+from flask_security import Security, SQLAlchemyUserDatastore, UserMixin, RoleMixin, logout_user, \
+    login_required
+from flask_security.utils import encrypt_password, verify_password
 
 from blog.orm import db
 
@@ -24,6 +26,7 @@ class User(db.Model, UserMixin):
     confirmed_at = db.Column(db.DateTime())
     roles = db.relationship('Role', secondary=roles_users,
                             backref=db.backref('users', lazy='dynamic'))
+
 
 # Setup Flask-Security
 user_datastore = SQLAlchemyUserDatastore(db, User, Role)

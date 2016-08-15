@@ -1,4 +1,4 @@
-from flask import Blueprint, current_app, jsonify, request
+from flask import Blueprint, current_app, jsonify
 from flask.ext.security import current_user, login_required
 from marshmallow import fields, Schema, ValidationError
 

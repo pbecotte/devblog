@@ -11,17 +11,17 @@
                 <span class="icon-bar"></span>
                 <span class="icon-bar"></span>
             </button>
-            <a class="navbar-brand" [routerLink]="['/angular']">Paul Becotte</a>
+            <a class="navbar-brand" [routerLink]="['angular']">Paul Becotte</a>
         </div>
 
         <!-- Collect the nav links, forms, and other content for toggling -->
         <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
             <ul class="nav navbar-nav navbar-right">
                 <li><a [routerLink]="['/angular']">Home</a></li>
-                <li><a [routerLink]="['/angular/drafts']">Drafts</a></li>
-                <li><a [routerLink]="['/angular/create']">Create Entry</a></li>
-                <li><a href="#">Log out</a></li>
-                <li><a href="#">Log in</a></li>
+                <li *ngIf="authService.isLoggedIn"><a [routerLink]="['angular/drafts']">Drafts</a></li>
+                <li *ngIf="authService.isLoggedIn"><a [routerLink]="['angular/create']">Create Entry</a></li>
+                <li *ngIf="authService.isLoggedIn" (click)="authService.logout()"><a [routerLink]="['angular']">Log out</a></li>
+                <li *ngIf="!authService.isLoggedIn"><a [routerLink]="['angular/login']">Log in</a></li>
                 <li *ngFor="let entry of navService.extraNav"><a
                         [routerLink]="entry.dest">{{ entry.title }}</a></li>
             </ul>
@@ -50,8 +50,8 @@
 
 <!-- Main Content -->
 <div class="container">
-    <div *ngFor="let message of messages" class="alert alert-dismissable alert-success">
-        <button (click)="ackMessage(message)" type="button" class="close" data-dismiss="alert"
+    <div *ngFor="let message of messageService.messages" class="alert alert-dismissable alert-success">
+        <button (click)="messageService.ackMessage(message)" type="button" class="close" data-dismiss="alert"
                 aria-hidden="true">&times;</button>
         <p>{{ message }}</p>
     </div>
