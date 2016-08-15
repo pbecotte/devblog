@@ -8,31 +8,31 @@ import {LoginComponent} from "../auth/login.component";
 
 const routes:RouterConfig = [
     {
-        path: 'angular',
+        path: '',
         component: BlogIndexComponent,
         data: {drafts: false}
     },
     {
-        path: 'angular/login',
+        path: 'login',
         component: LoginComponent,
     },
     {
-        path: 'angular/entry/:slug',
+        path: 'entry/:slug',
         component: BlogDetailComponent
     },
     {
-        path: 'angular/drafts',
+        path: 'drafts',
         component: BlogIndexComponent,
         data: {drafts: true},
         canActivate: [LoggedInGuard],
     },
     {
-        path: 'angular/entry/:slug/edit',
+        path: 'entry/:slug/edit',
         component: BlogEditFormComponent,
         canActivate: [LoggedInGuard],
     },
     {
-        path: 'angular/create',
+        path: 'create',
         component: BlogEditFormComponent,
         canActivate: [LoggedInGuard],
     }

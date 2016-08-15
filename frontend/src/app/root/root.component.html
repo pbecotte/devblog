@@ -11,17 +11,17 @@
                 <span class="icon-bar"></span>
                 <span class="icon-bar"></span>
             </button>
-            <a class="navbar-brand" [routerLink]="['angular']">Paul Becotte</a>
+            <a class="navbar-brand" [routerLink]="['']">Paul Becotte</a>
         </div>
 
         <!-- Collect the nav links, forms, and other content for toggling -->
         <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
             <ul class="nav navbar-nav navbar-right">
-                <li><a [routerLink]="['/angular']">Home</a></li>
-                <li *ngIf="authService.isLoggedIn"><a [routerLink]="['angular/drafts']">Drafts</a></li>
-                <li *ngIf="authService.isLoggedIn"><a [routerLink]="['angular/create']">Create Entry</a></li>
+                <li><a [routerLink]="['']">Home</a></li>
+                <li *ngIf="authService.isLoggedIn"><a [routerLink]="['drafts']">Drafts</a></li>
+                <li *ngIf="authService.isLoggedIn"><a [routerLink]="['create']">Create Entry</a></li>
                 <li *ngIf="authService.isLoggedIn" (click)="authService.logout()"><a [routerLink]="['angular']">Log out</a></li>
-                <li *ngIf="!authService.isLoggedIn"><a [routerLink]="['angular/login']">Log in</a></li>
+                <li *ngIf="!authService.isLoggedIn"><a [routerLink]="['login']">Log in</a></li>
                 <li *ngFor="let entry of navService.extraNav"><a
                         [routerLink]="entry.dest">{{ entry.title }}</a></li>
             </ul>
@@ -109,7 +109,7 @@
 </footer>
 
 <!-- jQuery -->
-<script src="/static/js/jquery-1.11.0.min.js"></script>
+<script src="/js/jquery-1.11.0.min.js"></script>
 
 <!-- Bootstrap Core JavaScript -->
-<script src="/static/js/bootstrap.min.js"></script>
+<script src="/js/bootstrap.min.js"></script>

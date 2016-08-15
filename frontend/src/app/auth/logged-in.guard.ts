@@ -13,7 +13,7 @@ export class LoggedInGuard implements CanActivate {
         }
 
         this.auth.redirectUrl = state.url;
-        this.router.navigate(['angular/login']);
+        this.router.navigate(['login']);
         return false;
     }
 }

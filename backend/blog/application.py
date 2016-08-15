@@ -2,9 +2,10 @@ from flask import Flask, render_template
 import urllib
 
 from blog.orm import db
-from blog.security import security, jwt
+from blog.security import security
 from blog.entry import entry
 from blog.entry.api import ENTRY_API
+from blog.security.api import SECURITY_API
 
 
 def create_app():
@@ -14,7 +15,7 @@ def create_app():
     app.config.from_object('blog.secrets')
     db.init_app(app)
     security.init_app(app)
-    jwt.init_app(app)
+    app.register_blueprint(SECURITY_API)
     app.register_blueprint(entry)
     app.register_blueprint(ENTRY_API)
 

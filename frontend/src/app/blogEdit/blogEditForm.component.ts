@@ -7,7 +7,7 @@ import {Entry, EntryService} from "../models/entry.service";
 
 @Component({
     selector: 'entry-edit-form',
-    templateUrl: '/angular/app/blogEdit/blogEditForm.component.html',
+    templateUrl: 'app/blogEdit/blogEditForm.component.html',
     directives: [ROUTER_DIRECTIVES],
 })
 export class BlogEditFormComponent implements OnInit, OnDestroy{

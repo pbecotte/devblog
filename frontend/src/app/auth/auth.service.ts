@@ -24,7 +24,7 @@ export class AuthService {
 
 
     login(username: string, password: string) {
-        this.http.post('login', {email: username, password: password})
+        this.http.post('api/login', {email: username, password: password})
             .subscribe(
                 response => {
                     var r = response.json().response.user;
@@ -35,19 +35,19 @@ export class AuthService {
                         this.router.navigate([this.redirectUrl])
                     }
                     else {
-                        this.router.navigate(['angular'])
+                        this.router.navigate([''])
                     }
                 },
                 error => this.messageService.addMessage('Login Failed!'));
     }
 
     logout() {
-        this.http.get('logout')
+        this.http.get('api/logout')
             .subscribe(
                 response => {
                     localStorage.removeItem('auth_token');
                     this.isLoggedIn = false;
-                    this.router.navigate(['angular/login']);
+                    this.router.navigate(['']);
                 },
                 error => {
                     console.log(error);

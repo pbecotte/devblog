@@ -9,7 +9,7 @@ import {HeaderService} from "../models/header.service";
 
 @Component({
     selector: 'blogDetail',
-    templateUrl: '/angular/app/blogDetail/blogDetail.component.html',
+    templateUrl: 'app/blogDetail/blogDetail.component.html',
     pipes: [Safe],
 })
 export class BlogDetailComponent implements OnInit, OnDestroy {

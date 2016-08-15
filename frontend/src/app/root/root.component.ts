@@ -10,7 +10,7 @@ import {AuthService} from "../auth/auth.service";
 
 @Component({
     selector: 'my-app',
-    templateUrl: '/angular/app/root/root.component.html',
+    templateUrl: 'app/root/root.component.html',
     directives: [ROUTER_DIRECTIVES],
     providers: [EntryService, NavService, HeaderService],
     pipes: [SafeStyle]

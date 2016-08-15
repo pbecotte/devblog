@@ -5,7 +5,7 @@ import {Entry, EntryService} from "../models/entry.service";
 
 @Component({
     selector: 'blogIndex',
-    templateUrl: '/angular/app/blogIndex/blogIndex.component.html',
+    templateUrl: 'app/blogIndex/blogIndex.component.html',
 })
 export class BlogIndexComponent implements OnDestroy, OnInit {
 

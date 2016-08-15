@@ -39,7 +39,7 @@
   var config = {
     map: map,
     packages: packages,
-    baseURL: '/angular'
+    baseURL: '/'
   };
   System.config(config);
 })(this);

@@ -4,7 +4,7 @@ import {AuthService} from './auth.service';
 
 
 @Component({
-    templateUrl: 'angular/app/auth/login.component.html'
+    templateUrl: 'app/auth/login.component.html'
 })
 export class LoginComponent {
     constructor(public authService: AuthService, public router: Router) {

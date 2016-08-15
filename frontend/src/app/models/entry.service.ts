@@ -24,8 +24,8 @@ export class EntryService {
         this.messageFlashed$ = new EventEmitter();
     }
 
-    private indexUrl = '/api/entries/';
-    private draftUrl = '/api/drafts/';
+    private indexUrl = 'api/entries/';
+    private draftUrl = 'api/drafts/';
     public messageFlashed$: EventEmitter<string>;
 
     getEntryIndex():Promise<Entry[]> {
@@ -56,7 +56,7 @@ export class EntryService {
                 url = this.indexUrl + entry.slug + '/edit/';
                 method = 'PUT';
             } else {
-                url = '/api/create/';
+                url = 'api/create/';
                 method = 'POST';
             }
 

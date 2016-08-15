@@ -1,8 +1,4 @@
-from flask_jwt import JWT, jwt_required
-from flask_security import Security, SQLAlchemyUserDatastore, UserMixin, RoleMixin, logout_user, \
-    login_required
-from flask_security.utils import encrypt_password, verify_password
-
+from flask_security import Security, SQLAlchemyUserDatastore, UserMixin, RoleMixin
 from blog.orm import db
 
 roles_users = db.Table(

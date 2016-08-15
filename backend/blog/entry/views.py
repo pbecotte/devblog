@@ -1,9 +1,9 @@
-from flask import Blueprint, current_app, jsonify, request, flash, render_template, redirect, url_for
+from flask import Blueprint, current_app, request, flash, render_template, redirect, url_for
 from flask.ext.security import login_required, current_user
 from .forms import CreateForm, ImageForm
 from .images import handle_image
 from .models import Entry
-from blog.utils import object_list, get_object_or_404, json_object_list
+from blog.utils import object_list, get_object_or_404
 
 entry = Blueprint('entry', __name__)
 
