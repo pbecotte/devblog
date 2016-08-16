@@ -19,10 +19,6 @@ services:
       - blog
     volumes_from:
       - blog
-      - frontend
-  frontend:
-    build: frontend
-    command: npm start
   postgres:
     image: postgres
     environment:

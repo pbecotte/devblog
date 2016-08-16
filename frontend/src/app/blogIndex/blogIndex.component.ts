@@ -34,7 +34,7 @@ export class BlogIndexComponent implements OnDestroy, OnInit {
     }
 
     gotoDetail(entry:Entry) {
-        let link = ['/angular/entry', entry.slug];
+        let link = ['entry', entry.slug];
         this.router.navigate(link);
     }
 }

@@ -28,6 +28,8 @@ restore:
 	docker-machine scp backup.sql $(MACHINE):/tmp/backup.sql
 	eval `docker-machine env $(MACHINE)` && docker-compose -p blog -f docker-compose.yml -f docker-compose.admin.yml run --rm restore
 deploy:
+	docker-compose build frontend
+	docker-compose run --rm frontend npm run build
 	eval `docker-machine env $(MACHINE)` && docker-compose -f docker-compose.yml -p blog build
 	eval `docker-machine env $(MACHINE)` && docker-compose -p blog -f docker-compose.yml run --rm blog alembic upgrade head
 	eval `docker-machine env $(MACHINE)` && docker-compose -f docker-compose.yml -p blog up -d
