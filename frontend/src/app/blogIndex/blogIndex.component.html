@@ -1,14 +1,16 @@
 <div *ngFor="let entry of entries" (click)="gotoDetail(entry)">
-    <div class="post-preview">
-        <h2 class="post-title">
-            {{ entry.title }}
-        </h2>
-        <h3 class="post-subtitle">
-          {{ entry.tagline }}
-        </h3>
-        <p class="post-meta">
-            Created {{ entry.timestamp }}
-        </p>
+    <div class="pointer">
+        <div class="post-preview">
+            <h2 class="post-title">
+                {{ entry.title }}
+            </h2>
+            <h3 class="post-subtitle">
+                {{ entry.tagline }}
+            </h3>
+            <p class="post-meta">
+                Created {{ entry.timestamp }}
+            </p>
+        </div>
     </div>
     <hr>
 </div>

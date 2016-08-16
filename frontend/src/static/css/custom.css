@@ -1,0 +1,14 @@
+.intro-header {
+    padding-top: 100px;
+}
+
+.intro-header .site-heading {
+    padding: 50px;
+    background-color: black;
+    opacity: .7;
+    margin-bottom: 25px;
+}
+
+.pointer {
+    cursor: pointer;
+}

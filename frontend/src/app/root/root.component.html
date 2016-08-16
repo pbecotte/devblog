@@ -33,15 +33,13 @@
 
 <!-- Set your background image for this header on the line below. -->
 <header class="intro-header" [ngStyle]="{'background-image': 'url(' + headerService.header.image + ')'}">
-    <div class="container">
+    <div class="container-fluid">
         <div class="row">
-            <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+            <div class="col-lg-offset-1 col-lg-10">
                 <div class="site-heading">
-                    <div style="background-color:black; opacity:0.7;">
                         <h1>{{ headerService.header.title }}</h1>
                         <hr class="small">
                         <span class="subheading">{{ headerService.header.subhead }}</span>
-                    </div>
                 </div>
             </div>
         </div>

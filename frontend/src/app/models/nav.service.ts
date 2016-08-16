@@ -17,7 +17,7 @@ export class NavService {
     public extraNav: NavEntry[];
     
     addEdit(slug:string) {
-        let nav: NavEntry = {title: 'Edit Entry', dest: ['/angular/entry', slug, '/edit']};
+        let nav: NavEntry = {title: 'Edit Entry', dest: ['entry', slug, '/edit']};
         this.extraNav.push(nav)
     }
     removeEdit() {
