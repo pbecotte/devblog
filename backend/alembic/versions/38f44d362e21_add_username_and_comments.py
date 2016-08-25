@@ -17,7 +17,7 @@ import sqlalchemy as sa
 
 
 def upgrade():
-    op.add_column('user', sa.Column('alias', sa.String(length=255), nullable=False))
+    op.add_column('user', sa.Column('alias', sa.String(length=255), nullable=False, unique=True))
     op.add_column('entry', sa.Column('author_id', sa.Integer(), sa.ForeignKey('user.id'), nullable=True))
     op.create_table('comment',
         sa.Column('id', sa.Integer(), primary_key=True),
