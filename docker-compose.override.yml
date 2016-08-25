@@ -5,8 +5,8 @@ services:
       - /tmp
       - ./backend:/data
   nginx:
-    volumes_from:
-      - frontend
+    volumes:
+      - ./frontend/dist:/app/dist
   frontend:
     build: frontend
     command: npm start

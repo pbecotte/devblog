@@ -20,6 +20,8 @@ oembed_providers = bootstrap_basic(OEmbedCache())
 
 class Entry(db.Model):
     id = db.Column(db.Integer, primary_key=True)
+    author_id = db.Column(db.Integer, db.ForeignKey('user.id'))
+    author = db.relationship('User')
     title = db.Column(db.String(255), unique=True)
     slug = db.Column(db.String(255), unique=True)
     tagline = db.Column(db.String(5000))
@@ -67,3 +69,13 @@ class Entry(db.Model):
             urlize_all=True,
             maxwidth=current_app.config['SITE_WIDTH'])
         return Markup(oembed_content)
+
+
+class Comment(db.Model):
+    id = db.Column('id', db.Integer(), primary_key=True)
+    user_id = db.Column('user_id', db.Integer(), db.ForeignKey('user.id'), nullable=False)
+    user = db.relationship('User')
+    post_id = db.Column('post_id', db.Integer(), db.ForeignKey('entry.id'), nullable=False)
+    post = db.relationship('Entry')
+    text = db.Column('text', db.Text(), nullable=True)
+    timestamp = db.Column('timestamp', db.DateTime(), nullable=False)

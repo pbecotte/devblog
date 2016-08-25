@@ -25,8 +25,6 @@ export class BlogEditFormComponent implements OnInit, OnDestroy{
     
     ngOnInit() {
         this.sub = this.route.params.subscribe(params => {
-            console.log('hello');
-            console.log(params);
             this.entrySlug = params['slug'];
             if (this.entrySlug) {
                 this.getEntry(this.entrySlug)

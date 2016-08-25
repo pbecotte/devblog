@@ -4,6 +4,7 @@ import {BlogDetailComponent} from "../blogDetail/blogDetail.component";
 import {BlogEditFormComponent} from "../blogEdit/blogEditForm.component";
 import {LoggedInGuard} from "../auth/logged-in.guard";
 import {LoginComponent} from "../auth/login.component";
+import {SignupComponent} from "../auth/signup.component";
 
 
 const routes:RouterConfig = [
@@ -15,6 +16,10 @@ const routes:RouterConfig = [
     {
         path: 'login',
         component: LoginComponent,
+    },
+    {
+        path: 'signup',
+        component: SignupComponent,
     },
     {
         path: 'entry/:slug',

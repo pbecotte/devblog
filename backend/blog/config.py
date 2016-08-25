@@ -7,5 +7,6 @@ SITE_WIDTH = 800
 
 SECURITY_LOGIN_URL = '/login'  # this is not reachable... overriden in views.py
 SECURITY_LOGOUT_URL = '/api/logout'
+SECURITY_SEND_REGISTER_EMAIL = False
 # Flask-Security blows up on CSRF tokens on API access
 WTF_CSRF_ENABLED = False

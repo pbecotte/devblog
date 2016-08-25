@@ -1,7 +1,7 @@
-import {EventEmitter, Injectable} from '@angular/core';
-import {Http} from '@angular/http';
+import {Injectable} from '@angular/core';
 import 'rxjs/add/operator/toPromise';
 import {AuthService} from "../auth/auth.service";
+import {MessageService} from "../messages/messages.service";
 
 
 export class Entry {
@@ -20,13 +20,11 @@ export class Entry {
 @Injectable()
 export class EntryService {
 
-    constructor(private auth:AuthService) {
-        this.messageFlashed$ = new EventEmitter();
+    constructor(private auth:AuthService, private messageService:MessageService) {
     }
 
     private indexUrl = 'api/entries/';
     private draftUrl = 'api/drafts/';
-    public messageFlashed$: EventEmitter<string>;
 
     getEntryIndex():Promise<Entry[]> {
         return this.auth.get(this.indexUrl)
@@ -75,15 +73,18 @@ export class EntryService {
 
             xhr.open(method, url, true);
             xhr.setRequestHeader("enctype", "multipart/form-data");
-            xhr.setRequestHeader("Authorization", this.auth.head()["Authorization"])
+            xhr.setRequestHeader("Authorization", this.auth.head()["Authorization"]);
             xhr.send(formData);
-        }).then(response => this.messageFlashed$.emit(response.json().messages))
-            .catch(this.handleError);
+        }).then(response => {
+            if (response.json) {
+                this.handleData(response.json())
+            }
+        }).catch(this.handleError);
     }
 
     private handleData(response_json) {
         if (response_json.messages) {
-            this.messageFlashed$.emit(response_json.messages);
+            this.messageService.addMessage.apply(response_json.messages)
         }
         return response_json.data
     }

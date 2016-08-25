@@ -6,13 +6,14 @@ import {HeaderService} from "../models/header.service";
 import {SafeStyle} from "./safe";
 import {MessageService} from "../messages/messages.service";
 import {AuthService} from "../auth/auth.service";
+import {CommentService} from "../blogComment/blogComment.service";
 
 
 @Component({
     selector: 'my-app',
     templateUrl: 'app/root/root.component.html',
     directives: [ROUTER_DIRECTIVES],
-    providers: [EntryService, NavService, HeaderService],
+    providers: [EntryService, NavService, HeaderService, CommentService],
     pipes: [SafeStyle]
 })
 export class RootComponent {

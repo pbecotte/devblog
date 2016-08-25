@@ -5,11 +5,14 @@ import {Entry, EntryService} from "../models/entry.service";
 import {Safe} from "../root/safe";
 import {NavService} from "../models/nav.service";
 import {HeaderService} from "../models/header.service";
+import {BlogCommentComponent} from "../blogComment/blogComment.component";
+import {AuthService} from "../auth/auth.service";
 
 
 @Component({
     selector: 'blogDetail',
     templateUrl: 'app/blogDetail/blogDetail.component.html',
+    directives: [BlogCommentComponent],
     pipes: [Safe],
 })
 export class BlogDetailComponent implements OnInit, OnDestroy {
@@ -23,7 +26,8 @@ export class BlogDetailComponent implements OnInit, OnDestroy {
         private route:ActivatedRoute,
         private entryService:EntryService,
         private navService:NavService,
-        private headerService:HeaderService
+        private headerService:HeaderService,
+        private authService:AuthService
     ) {}
 
     ngOnInit() {
@@ -48,7 +52,9 @@ export class BlogDetailComponent implements OnInit, OnDestroy {
                 subhead: this.entry.tagline,
                 image: this.image
             });
-            this.navService.addEdit(data.entry.slug);
+            if (this.authService.admin()) {
+                this.navService.addEdit(data.entry.slug);
+            }
         })
     }
 }

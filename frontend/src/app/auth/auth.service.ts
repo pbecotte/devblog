@@ -5,15 +5,10 @@ import {Http, Headers} from "@angular/http";
 import {MessageService} from "../messages/messages.service";
 import {Router} from "@angular/router";
 
-export class User {
-    username: string;
-}
-
 
 @Injectable()
 export class AuthService {
     public isLoggedIn: boolean = false;
-    public user: User;
     public redirectUrl: string;
 
     constructor(private http: Http,
@@ -22,6 +17,11 @@ export class AuthService {
         this.isLoggedIn = !!localStorage.getItem('auth_token');
     }
 
+    admin() {
+        var admin = localStorage.getItem('admin');
+        if (!this.isLoggedIn || admin == undefined){ return false; }
+        return admin === 'true';
+    }
 
     login(username: string, password: string) {
         this.http.post('api/login', {email: username, password: password})
@@ -29,6 +29,7 @@ export class AuthService {
                 response => {
                     var r = response.json().response.user;
                     localStorage.setItem('auth_token', r.authentication_token);
+                    localStorage.setItem('admin', r.admin);
                     this.isLoggedIn = true;
 
                     if (this.redirectUrl) {
@@ -53,6 +54,39 @@ export class AuthService {
                     console.log(error);
                     this.messageService.addMessage('Failed to logout...');
                 });
+    }
+
+    signup(alias: string, username: string, password: string) {
+        this.http.post('api/register', {
+            alias: alias,
+            email: username,
+            password: password,
+            password_confirm: password
+        })
+            .subscribe(
+                response => {
+                    var code = response.json().meta.code;
+                    if (code === 200) {
+                        var r = response.json().response.user;
+                        localStorage.setItem('auth_token', r.authentication_token);
+                        localStorage.setItem('admin', r.admin);
+                        this.isLoggedIn = true;
+                        this.router.navigate([''])
+                    } else {
+                        var errors = response.json().response.errors;
+                        if (errors.email) {
+                            this.messageService.addMessage(errors.email);
+                        }
+                        if (errors.password) {
+                            this.messageService.addMessage(errors.password);
+                        }
+                    }
+                },
+                error => {
+                    console.log(error);
+                    this.messageService.addMessage('Failed to sign up...');
+                }
+            );
     }
 
     head() {

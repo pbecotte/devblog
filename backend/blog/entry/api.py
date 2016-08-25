@@ -1,9 +1,11 @@
-from flask import Blueprint, current_app, jsonify
-from flask.ext.security import current_user, login_required
-from marshmallow import fields, Schema, ValidationError
+from datetime import datetime
+
+from flask import Blueprint, current_app, jsonify, request
+from flask.ext.security import current_user, login_required, roles_accepted
+from marshmallow import fields, post_load, Schema, ValidationError
 
 from blog.entry.forms import UpdateForm
-from blog.entry.models import Entry
+from blog.entry.models import Entry, Comment
 from blog.orm import db
 from blog.utils import get_object_or_404
 
@@ -25,6 +27,17 @@ class EntryDetailSchema(EntryStubSchema):
     content = fields.Str()
 
 
+class CommentSchema(Schema):
+    id = fields.Integer()
+    username = fields.Str(attribute="user.alias", dump_only=True)
+    text = fields.Str()
+    timestamp = fields.DateTime()
+
+    @post_load
+    def make_user(self, data):
+        return Comment(**data)
+
+
 @ENTRY_API.route('/api/entries/')
 def api_index():
     entries = Entry.public().order_by(Entry.timestamp.desc()).all()
@@ -33,7 +46,7 @@ def api_index():
 
 
 @ENTRY_API.route('/api/drafts/')
-@login_required
+@roles_accepted('admin')
 def api_drafts():
     entries = Entry.drafts().order_by(Entry.timestamp.desc()).all()
     data = EntryStubSchema(many=True).dump(entries).data
@@ -42,7 +55,7 @@ def api_drafts():
 
 @ENTRY_API.route('/api/entries/<slug>/')
 def api_entry(slug):
-    if current_user.is_authenticated():
+    if current_user.has_role('admin'):
         query = Entry.query
     else:
         query = Entry.public()
@@ -56,7 +69,7 @@ def api_entry(slug):
 
 
 @ENTRY_API.route('/api/entries/<slug>/edit/', methods=['PUT'])
-@login_required
+@roles_accepted('admin')
 def api_update_entry(slug):
     entry = get_object_or_404(Entry.query, Entry.slug == slug)
     form = UpdateForm()
@@ -75,7 +88,7 @@ def api_update_entry(slug):
 
 
 @ENTRY_API.route('/api/create/', methods=['POST'])
-@login_required
+@roles_accepted('admin')
 def api_create_entry():
     form = UpdateForm()
     try:
@@ -89,3 +102,22 @@ def api_create_entry():
         resp = jsonify({"error": err.messages})
         resp.status_code = 401
         return resp
+
+
+@ENTRY_API.route('/api/comments/<slug>')
+def fetch_comments(slug):
+    comments = Comment.query.join(Comment.post).filter(Entry.slug == slug).all()
+    data = CommentSchema(many=True).dump(comments).data
+    return jsonify(comments=data)
+
+
+@ENTRY_API.route('/api/comments/<slug>', methods=['POST'])
+@login_required
+def add_comment(slug):
+    comment = CommentSchema().load(request.json).data
+    comment.user = current_user
+    comment.post = Entry.query.filter(Entry.slug == slug).one()
+    comment.timestamp = datetime.now()
+    db.session.add(comment)
+    db.session.commit()
+    return jsonify(comment=CommentSchema().dump(comment).data)
