@@ -32,6 +32,14 @@ docker-machine create \
 (if you want to use another hosting provider, feel free!)
 Update your makefile with your machine name
 
+## optional - use DigitalOcean volume plugin
+
+setup volume plugin
+```sh
+make setup_volume DO_TOKEN=<a digital ocean token>
+```
+
+
 ```sh
 MACHINE=digitalocean
 ```

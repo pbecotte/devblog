@@ -2,7 +2,7 @@ version: '2'
 services:
   backup:
     image: postgres
-    depends_on:
+    links:
       - postgres
     volumes:
       - ./:/tmp
@@ -11,7 +11,7 @@ services:
     command: pg_dump -U postgres -h postgres postgres
   restore:
     image: postgres
-    depends_on:
+    links:
       - postgres
     volumes:
       - /tmp:/tmp

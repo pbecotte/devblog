@@ -1,0 +1,13 @@
+version: '2'
+services:
+  postgres:
+    environment:
+      - PGDATA=/var/lib/postgresql/data/pgdata
+    volumes:
+      - database:/var/lib/postgresql/data
+volumes:
+  database:
+    driver: digitalocean
+    driver_opts:
+      size: 5
+      desc: Blog backup
