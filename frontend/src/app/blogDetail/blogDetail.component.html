@@ -1,5 +1,5 @@
 <div *ngIf="entry">
-    <p>Created {{ entry.timestamp }}</p>
+    <p>Created {{ entry.timestamp | date }}</p>
     <div class="stdout" [innerHTML]="entry.html_content | safe"></div>
     <hr>
     <h3>Comments</h3>
