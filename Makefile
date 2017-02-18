@@ -7,9 +7,10 @@ VOLUME=-f docker-compose.deploy.yml
 # Dev Targets
 #####################
 build:
-	docker-compose build
+	mkdir -p frontend/dist
 	docker build -t building frontend
 	docker run --rm -v `pwd`/frontend/node_modules:/app/node_modules building npm install --unsafe-perm
+	docker-compose build
 migrate:
 	docker-compose run --rm blog python blog/fixtures.py
 up:
