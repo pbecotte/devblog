@@ -18,7 +18,7 @@
         <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
             <ul class="nav navbar-nav navbar-right">
                 <li><a [routerLink]="['']">Home</a></li>
-                <li *ngIf="authService.admin()"><a [routerLink]="['status']">Paul's Status</a></li>
+                <li *ngIf="authService.statusUser()"><a [routerLink]="['status']">Paul's Status</a></li>
                 <li *ngIf="authService.admin()"><a [routerLink]="['drafts']">Drafts</a></li>
                 <li *ngIf="authService.admin()"><a [routerLink]="['create']">Create Entry</a></li>
                 <li *ngIf="authService.isLoggedIn" (click)="authService.logout()"><a [routerLink]="['']">Log out</a></li>
