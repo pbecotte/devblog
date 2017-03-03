@@ -19,7 +19,11 @@ def render_json(form, include_user=True, include_auth_token=False):
         code = 200
         response = dict()
         if include_user:
-            response['user'] = dict(id=str(form.user.id), admin='admin' in form.user.roles)
+            response['user'] = dict(
+                id=str(form.user.id),
+                admin='admin' in form.user.roles,
+                status_user='status' in form.user.roles
+            )
         if include_auth_token:
             token = form.user.get_auth_token()
             response['user']['authentication_token'] = token

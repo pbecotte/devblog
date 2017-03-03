@@ -18,9 +18,15 @@ export class AuthService {
     }
 
     admin() {
-        var admin = localStorage.getItem('admin');
+        const admin = localStorage.getItem('admin');
         if (!this.isLoggedIn || admin == undefined){ return false; }
         return admin === 'true';
+    }
+
+    statusUser() {
+        const s = localStorage.getItem('statusUser');
+        if (!this.isLoggedIn || s == undefined){ return false; }
+        return s === 'true' || this.admin();
     }
 
     login(username: string, password: string) {
@@ -30,6 +36,7 @@ export class AuthService {
                     var r = response.json().response.user;
                     localStorage.setItem('auth_token', r.authentication_token);
                     localStorage.setItem('admin', r.admin);
+                    localStorage.setItem('statusUser', r.status_user);
                     this.isLoggedIn = true;
 
                     if (this.redirectUrl) {
