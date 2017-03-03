@@ -6,6 +6,7 @@ import {disableDeprecatedForms, provideForms} from '@angular/forms';
 import {LoggedInGuard} from "../auth/logged-in.guard";
 import {AuthService} from "../auth/auth.service";
 import {MessageService} from "../messages/messages.service";
+import {StatusService} from "../paulStatus/paulStatus.service";
 
 
 bootstrap(RootComponent, [
@@ -15,5 +16,6 @@ bootstrap(RootComponent, [
     provideForms(),
     LoggedInGuard,
     AuthService,
-    MessageService
+    MessageService,
+    StatusService
 ]).catch((err: any) => console.error(err));

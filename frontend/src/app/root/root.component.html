@@ -18,6 +18,7 @@
         <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
             <ul class="nav navbar-nav navbar-right">
                 <li><a [routerLink]="['']">Home</a></li>
+                <li *ngIf="authService.admin()"><a [routerLink]="['status']">Paul's Status</a></li>
                 <li *ngIf="authService.admin()"><a [routerLink]="['drafts']">Drafts</a></li>
                 <li *ngIf="authService.admin()"><a [routerLink]="['create']">Create Entry</a></li>
                 <li *ngIf="authService.isLoggedIn" (click)="authService.logout()"><a [routerLink]="['']">Log out</a></li>
@@ -93,7 +94,7 @@
                         </a>
                     </li>
                 </ul>
-                <p class="copyright text-muted">Copyright &copy; Paul Becotte 2015-2016</p>
+                <p class="copyright text-muted">Copyright &copy; Paul Becotte 2015-2017</p>
                 <p class="copyright text-muted">
                     All code samples are released under the
                     <a href="http://creativecommons.org/licenses/by-sa/3.0/">

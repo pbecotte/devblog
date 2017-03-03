@@ -7,6 +7,8 @@ from blog.entry import entry
 from blog.entry.api import ENTRY_API
 from blog.security.api import SECURITY_API
 
+from blog.status_day.api import STATUS_DAY_API
+
 
 def create_app():
     # Create app
@@ -18,6 +20,7 @@ def create_app():
     app.register_blueprint(SECURITY_API)
     app.register_blueprint(entry)
     app.register_blueprint(ENTRY_API)
+    app.register_blueprint(STATUS_DAY_API)
 
     @app.errorhandler(404)
     def not_found(exc):

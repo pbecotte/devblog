@@ -1,0 +1,14 @@
+<div class="row">
+    <button class="ph-button ph-btn-grey top-button" (click)="createStatus()">Create Status Day</button>
+</div>
+<div class="row">
+    <div [ngClass]="{'statusbox': true, 'ph-button': true, 'ph-btn-green': status.status === 'good', 'ph-btn-red': status.status !== 'good', 'col-lg-2': true}" *ngFor="let status of statuses" (click)="updateStatus(status)">
+        <h2 class="status-date">
+            {{ status.date }}
+        </h2>
+        <h3 class="status">
+            {{ status.status }}
+        </h3>
+        <hr>
+    </div>
+</div>

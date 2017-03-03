@@ -5,6 +5,7 @@ import {BlogEditFormComponent} from "../blogEdit/blogEditForm.component";
 import {LoggedInGuard} from "../auth/logged-in.guard";
 import {LoginComponent} from "../auth/login.component";
 import {SignupComponent} from "../auth/signup.component";
+import {PaulStatusComponent} from "../paulStatus/paulStatus.component";
 
 
 const routes:RouterConfig = [
@@ -39,6 +40,11 @@ const routes:RouterConfig = [
     {
         path: 'create',
         component: BlogEditFormComponent,
+        canActivate: [LoggedInGuard],
+    },
+    {
+        path: 'status',
+        component: PaulStatusComponent,
         canActivate: [LoggedInGuard],
     }
 ];
